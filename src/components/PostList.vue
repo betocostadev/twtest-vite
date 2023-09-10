@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { usePostsStore } from '../stores/posts/usePostsStore.ts'
-import { ChevronUpIcon } from '@heroicons/vue/20/solid'
-import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import PostItem from './PostItem.vue'
 
 defineProps<{ title: string }>()
 
@@ -29,46 +28,17 @@ onMounted(async () => {
         <p class="text-white text-base self-center">No posts to show</p>
       </div>
       <div v-for="(post, index) in store.getPosts" :key="post.id">
-        <div :id="`post-${index}`" class="max-w-full w-full lg:max-w-full">
-          <div
-            class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded p-2 leading-normal mb-4 h-20"
-          >
-            <div class="flex justify-between h-full px-1">
-              <p class="text-gray-700 text-base self-center">Post {{ post.id }}</p>
-              <div
-                class="flex flex-col"
-                :class="
-                  index !== 0 && index < store.getPosts.length - 1
-                    ? 'justify-between'
-                    : 'justify-center'
-                "
-              >
-                <button
-                  v-if="index > 0"
-                  aria-label="Move post up"
-                  :class="index === 0 ? 'self-center' : ''"
-                  @click="movePostUp(post.id, index)"
-                >
-                  <ChevronUpIcon class="h-6 w-6 text-indigo-500 hover:animate-bounce" />
-                </button>
-                <button
-                  v-if="index < store.getPosts.length - 1"
-                  aria-label="Move post down"
-                  @click="movePostDown(post.id, index)"
-                >
-                  <ChevronDownIcon class="h-6 w-6 text-indigo-500 hover:animate-bounce" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PostItem
+          :post="post"
+          :index="index"
+          :isFirst="index === 0"
+          :isLast="index === store.getPosts.length"
+          @moveUp="movePostUp"
+          @moveDown="movePostDown"
+        />
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>
+<style scoped></style>

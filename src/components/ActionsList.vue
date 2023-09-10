@@ -2,6 +2,7 @@
 import { usePostsStore } from '../stores/posts/usePostsStore'
 import { useActionsListStore } from '../stores/actionsList/useActionsListStore'
 import { IAction } from '../@types/actions'
+import ActionItem from './ActionItem.vue'
 
 defineProps<{ title: string }>()
 
@@ -29,27 +30,10 @@ const timeTravel = (action: IAction) => {
         v-for="action in store.getActionsList"
         :key="`action-${action.id}`"
       >
-        <div>
-          <div
-            class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-2 leading-normal"
-          >
-            <div class="mb-2 flex justify-between">
-              <p class="text-gray-700 text-sm">
-                {{ `Moved Post ${action.id} from index ${action.from} to index ${action.to}` }}
-              </p>
-              <button class="text-gray-700 text-sm font-bold p-2" @click="timeTravel(action)">
-                Time Travel
-              </button>
-            </div>
-          </div>
-        </div>
+        <ActionItem :action="action" @timeTravel="timeTravel" />
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>
+<style scoped></style>

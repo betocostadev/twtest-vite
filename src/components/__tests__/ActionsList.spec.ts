@@ -76,8 +76,6 @@ describe('ActionsList', () => {
     await firstPost?.get('button').trigger('click')
     await firstPost?.get('button').trigger('click')
 
-    // const timeTravel = wrapper?.find('button').attributes
-
     const storeActions = useActionsListStore()
     const spyActions = vi.spyOn(storeActions, 'removeOlderActions')
     expect(storeActions.getActionsList.length).toBe(4)
@@ -89,5 +87,36 @@ describe('ActionsList', () => {
     const newSecondPost = postsList.find('#post-1')
     expect(newFirstPost?.text()).toContain('Post 1')
     expect(newSecondPost?.text()).toContain('Post 2')
+  })
+
+  it('travels back in time one step and keep the list', async () => {
+    // List will start empty in this test
+    expect(ActionsList).toBeTruthy()
+
+    const postsList = mount(PostList, {
+      props: { title: 'List of actions commited' },
+    })
+
+    const storePosts = usePostsStore()
+    const spyPosts = vi.spyOn(storePosts, 'setPosts')
+    await storePosts.setPosts(5)
+    expect(spyPosts).toHaveBeenCalledTimes(1)
+    expect(storePosts.getPosts.length).toBe(5)
+
+    const firstPost = postsList.find('#post-0')
+    expect(firstPost?.text()).toContain('Post 1')
+    await firstPost?.get('button').trigger('click')
+    await firstPost?.get('button').trigger('click')
+    const fifthPost = postsList.find('#post-4')
+    await fifthPost?.get('button').trigger('click')
+
+    const storeActions = useActionsListStore()
+    const spyActions = vi.spyOn(storeActions, 'removeOlderActions')
+    expect(storeActions.getActionsList.length).toBe(3)
+    const timeTravel = wrapper?.findAll('button')[1]
+    await timeTravel?.trigger('click')
+    expect(spyActions).toHaveBeenCalledTimes(1)
+    expect(storeActions.getActionsList.length).toBe(1)
+    expect(wrapper?.text()).toContain('Moved Post')
   })
 })
