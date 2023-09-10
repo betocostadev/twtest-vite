@@ -54,8 +54,8 @@ describe('ActionsList', () => {
 
     const storeActions = useActionsListStore()
     expect(storeActions.getActionsList.length).toBe(2)
-    expect(storeActions.getActionsList[0].from).toBe(0)
-    expect(storeActions.getActionsList[0].to).toBe(1)
+    expect(storeActions.getActionsList[0].from).toBe(1)
+    expect(storeActions.getActionsList[0].to).toBe(0)
   })
 
   it('travels back in time and clears the list', async () => {
@@ -79,7 +79,8 @@ describe('ActionsList', () => {
     const storeActions = useActionsListStore()
     const spyActions = vi.spyOn(storeActions, 'removeOlderActions')
     expect(storeActions.getActionsList.length).toBe(4)
-    const timeTravel = wrapper?.findAll('button')[0]
+
+    const timeTravel = wrapper?.findAll('button')[3]
     await timeTravel?.trigger('click')
     expect(spyActions).toHaveBeenCalledTimes(1)
     expect(wrapper?.text()).toContain('No point in time to travel to')
@@ -117,6 +118,6 @@ describe('ActionsList', () => {
     await timeTravel?.trigger('click')
     expect(spyActions).toHaveBeenCalledTimes(1)
     expect(storeActions.getActionsList.length).toBe(1)
-    expect(wrapper?.text()).toContain('Moved Post')
+    expect(wrapper?.text()).toContain('from index 0 to index 1')
   })
 })

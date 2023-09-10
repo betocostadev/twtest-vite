@@ -14,7 +14,7 @@ export const useActionsListStore = defineStore('actionsList', {
 
   actions: {
     addAction({ id, from, to, listOrder }: IAction) {
-      this.listOfActions.push({ id, from, to, listOrder, value: this.listOfActions.length })
+      this.listOfActions.unshift({ id, from, to, listOrder, value: this.listOfActions.length })
     },
 
     removeOlderActions(value: number) {
