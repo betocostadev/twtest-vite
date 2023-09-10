@@ -22,7 +22,7 @@ const timeTravel = (action: IAction) => {
       <h2 className="text-lg text-left pl-4 font-bold my-4 text-gray-700">{{ title }}</h2>
 
       <div class="container flex flex-col justify-items-stretch mx-auto px-6 py-6 bg-gray-100">
-        <div class="p-4" v-if="!store.getActionsList.length">
+        <div v-if="!store.getActionsList.length" class="p-4">
           <p class="text-gray-700 text-base">No point in time to travel to</p>
         </div>
         <transition-group name="fade" tag="div">
@@ -31,7 +31,7 @@ const timeTravel = (action: IAction) => {
               :action="action"
               :isFirst="index === 0"
               :isLast="index === store.getActionsList.length - 1"
-              @timeTravel="timeTravel"
+              @time-travel="timeTravel"
             />
           </template>
         </transition-group>

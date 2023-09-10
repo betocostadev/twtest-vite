@@ -37,8 +37,8 @@ onMounted(async () => {
             :index="index"
             :isFirst="index === 0"
             :isLast="index === store.getPosts.length - 1"
-            @moveUp="movePostUp"
-            @moveDown="movePostDown"
+            @move-up="movePostUp"
+            @move-down="movePostDown"
           />
         </li>
       </transition-group>

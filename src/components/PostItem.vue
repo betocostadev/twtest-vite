@@ -5,15 +5,15 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 
 defineProps<{ post: IPost; index: number; isFirst: boolean; isLast: boolean }>()
 const emit = defineEmits<{
-  (e: 'moveUp', id: number): void
-  (e: 'moveDown', id: number): void
+  (e: 'move-up', id: number): void
+  (e: 'move-down', id: number): void
 }>()
 
 const triggerMoveUp = (id: number) => {
-  emit('moveUp', id)
+  emit('move-up', id)
 }
 const triggerMoveDown = (id: number) => {
-  emit('moveDown', id)
+  emit('move-down', id)
 }
 </script>
 

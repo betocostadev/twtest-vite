@@ -3,11 +3,11 @@ import { IAction } from '../@types/actions'
 
 defineProps<{ action: IAction; isFirst: boolean; isLast: boolean }>()
 const emit = defineEmits<{
-  (e: 'timeTravel', action: IAction): void
+  (e: 'time-travel', action: IAction): void
 }>()
 
 const triggerTravel = (action: IAction) => {
-  emit('timeTravel', action)
+  emit('time-travel', action)
 }
 </script>
 
